@@ -36,11 +36,7 @@
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
       #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(),
-<<<<<<< HEAD
       now())
-=======
-            now())
->>>>>>> 34ec1f07ab0635f85091733efa00fdaf9a148e73
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.User" >
     insert into mmall_user
