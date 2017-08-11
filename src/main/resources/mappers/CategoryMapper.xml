@@ -101,7 +101,11 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
+<<<<<<< HEAD
         update_time = now()},
+=======
+        update_time = now(),
+>>>>>>> 34ec1f07ab0635f85091733efa00fdaf9a148e73
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
