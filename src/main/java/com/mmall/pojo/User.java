@@ -1,8 +1,12 @@
 package com.mmall.pojo;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+public class User implements Serializable{
     private Integer id;
 
     private String username;
