@@ -1,6 +1,7 @@
 package com.mmall.service.impl;
 
 import com.mmall.common.Const;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements IUserService{
     private UserMapper userMapper;
     @Override
     public ServerResponse<User> login(String username, String password) {
+        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         int resultCount = userMapper.selectCheckUsernameExist(username);
         if(resultCount == 0){
             return ServerResponse.createByErrorMessage("用户不存在");
@@ -40,7 +44,10 @@ public class UserServiceImpl implements IUserService{
         }
     }
 
-    public ServerResponse<User> managerLogin(String username, String password){
+    public ServerResponse<User> manageLogin(String username, String password){
+        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         User user = userMapper.selectByUsername(username);
         if(user == null){
             return ServerResponse.createByErrorMessage("用户不存在");
@@ -113,6 +120,9 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<String> forgetCheckAnswer(String username,String question,String answer){
+        if(StringUtils.isBlank(username) || question == null || answer == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         int checkCount = userMapper.selectForgetCheckAnswer(username,question,answer);
         if(checkCount == 0){
             return ServerResponse.createByErrorMessage("问题答案错误");
@@ -124,6 +134,9 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken){
+        if(StringUtils.isBlank(username) || StringUtils.isBlank(passwordNew) || forgetToken == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         ServerResponse validResponse = checkValid(username,Const.USERNAME);
         if(validResponse.isSuccess()){  //校验成功说明用户名不存在
             return ServerResponse.createByErrorMessage("用户不存在");
@@ -146,6 +159,9 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<String> resetPassword(String passwordOld,String passwordNew,User user){
+        if(StringUtils.isBlank(passwordOld) || StringUtils.isBlank(passwordNew)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         int resultCount = userMapper.selectCheckPasswordOld(MD5Util.MD5EncodeUtf8(passwordOld),user.getId());
         if(resultCount == 0){
             return ServerResponse.createByErrorMessage("旧密码输入错误");
@@ -181,6 +197,9 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<User> getInformation(Integer id){
+        if(id == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         User user = userMapper.selectByPrimaryKey(id);
         if(user == null){
             return ServerResponse.createByErrorMessage("找不到当前用户");
@@ -188,4 +207,5 @@ public class UserServiceImpl implements IUserService{
         user.setPassword(null);
         return ServerResponse.createBySuccess(user);
     }
+
 }

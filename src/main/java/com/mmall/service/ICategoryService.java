@@ -9,11 +9,11 @@ import java.util.List;
  * Created by yao on 2017/8/18.
  */
 public interface ICategoryService {
-    ServerResponse<List<Category>> getCategory(int categoryId);
+    ServerResponse<List<Category>> getCategory(Integer categoryId);
 
-    ServerResponse<String> addCategory(int parentId,String categoryName);
+    ServerResponse<String> addCategory(Integer parentId,String categoryName);
 
-    ServerResponse<String> setCategoryName(int categoryId, String categoryName);
+    ServerResponse<String> setCategoryName(Integer categoryId, String categoryName);
 
-    ServerResponse<List<Integer>> getDeepCategory(int categoryId);
+    ServerResponse<List<Integer>> getDeepCategory(Integer categoryId);
 }

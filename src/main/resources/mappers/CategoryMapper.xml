@@ -106,17 +106,23 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="selectCheckCategoryExistById" resultType="int" parameterType="int">
+  <select id="selectCheckCategoryExistById" resultType="int" parameterType="integer">
     select count(1)
     from mmall_category
-    where id = #{categoryId}
+    where id = #{id}
   </select>
   
-  <select id="listCategoryByParentId" resultMap="BaseResultMap" parameterType="int">
+  <select id="listCategoryByParentId" resultMap="BaseResultMap" parameterType="integer">
     select
     <include refid="Base_Column_List"></include>
     from mmall_category
     where parent_id = #{parentId}
+  </select>
+
+  <select id="selectParentIdByPrimaryKey" resultType="integer" parameterType="integer">
+    select parent_id
+    from mmall_category
+    where id = #{id}
   </select>
 
 </mapper>

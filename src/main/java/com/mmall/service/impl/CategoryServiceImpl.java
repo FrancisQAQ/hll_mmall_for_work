@@ -2,11 +2,13 @@ package com.mmall.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
 import com.mmall.pojo.Category;
 import com.mmall.service.ICategoryService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,10 @@ public class CategoryServiceImpl implements ICategoryService{
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public ServerResponse<List<Category>> getCategory(int categoryId){
+    public ServerResponse<List<Category>> getCategory(Integer categoryId){
+        if(categoryId == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         if(categoryId != 0){
             int resultCount = categoryMapper.selectCheckCategoryExistById(categoryId);
             if(resultCount == 0){
@@ -38,12 +43,13 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccess(categories);
     }
 
-    public ServerResponse<String> addCategory(int parentId,String categoryName){
-        if(parentId != 0){
-            int resultCount = categoryMapper.selectCheckCategoryExistById(parentId);
-            if(resultCount == 0){
-                return ServerResponse.createByErrorMessage("父品类不存在");
-            }
+    public ServerResponse<String> addCategory(Integer parentId,String categoryName){
+        if(parentId == null || StringUtils.isBlank(categoryName)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        int resultCount = categoryMapper.selectCheckCategoryExistById(parentId);
+        if(resultCount == 0){
+            return ServerResponse.createByErrorMessage("父品类不存在");
         }
         Category category = new Category();
         category.setParentId(parentId);
@@ -56,7 +62,10 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createByErrorMessage("添加品类失败");
     }
 
-    public ServerResponse<String> setCategoryName(int categoryId, String categoryName){
+    public ServerResponse<String> setCategoryName(Integer categoryId, String categoryName){
+        if(categoryId == null || StringUtils.isBlank(categoryName)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         int resultCount = categoryMapper.selectCheckCategoryExistById(categoryId);
         if(resultCount == 0){
             return ServerResponse.createByErrorMessage("未找到该品类");
@@ -71,7 +80,10 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createByErrorMessage("更新品类名字失败");
     }
 
-    public ServerResponse<List<Integer>> getDeepCategory(int categoryId){
+    public ServerResponse<List<Integer>> getDeepCategory(Integer categoryId){
+        if(categoryId == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
         if(categoryId != 0){
             int resultCount = categoryMapper.selectCheckCategoryExistById(categoryId);
             if(resultCount == 0){
@@ -93,7 +105,7 @@ public class CategoryServiceImpl implements ICategoryService{
      * @param categoryId
      * @return
      */
-    private Set<Category> recursiveCategory(Set<Category> categorySet,int categoryId){
+    private Set<Category> recursiveCategory(Set<Category> categorySet,Integer categoryId){
         if(categoryId != 0){
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
             if(category != null){

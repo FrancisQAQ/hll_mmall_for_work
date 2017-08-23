@@ -18,9 +18,10 @@ public interface CategoryMapper {
 
     int updateByPrimaryKey(Category record);
 
-    int selectCheckCategoryExistById(Integer categoryId);
-
+    int selectCheckCategoryExistById(Integer id);
 
     List<Category> listCategoryByParentId(Integer parentId);
+
+    Integer selectParentIdByPrimaryKey(Integer id);
 
 }
