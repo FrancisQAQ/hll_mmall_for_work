@@ -13,6 +13,7 @@ import com.mmall.pojo.Cart;
 import com.mmall.pojo.Product;
 import com.mmall.service.ICartService;
 import com.mmall.util.BigDecimalUtil;
+import com.mmall.util.PropertiesUtil;
 import com.mmall.vo.CartProductVO;
 import com.mmall.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class CartServiceImpl implements ICartService{
         cartVO.setCartProductVOList(cartProductVOList);
         cartVO.setAllChecked(judgeAllChecked(userId));
         cartVO.setCartTotalPrice(totalPrice);
+        cartVO.setImgHost(PropertiesUtil.getDefaultParam("ftp.server.http.prefix","http://img.happymmall.com/"));
         return ServerResponse.createBySuccess(cartVO);
     }
 

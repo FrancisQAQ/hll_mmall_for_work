@@ -10,6 +10,7 @@ public class CartVO {
     private List<CartProductVO> cartProductVOList;
     private boolean allChecked;
     private BigDecimal cartTotalPrice;
+    private String imgHost;
 
     public List<CartProductVO> getCartProductVOList() {
         return cartProductVOList;
@@ -33,5 +34,13 @@ public class CartVO {
 
     public void setCartTotalPrice(BigDecimal cartTotalPrice) {
         this.cartTotalPrice = cartTotalPrice;
+    }
+
+    public String getImgHost() {
+        return imgHost;
+    }
+
+    public void setImgHost(String imgHost) {
+        this.imgHost = imgHost;
     }
 }
