@@ -30,4 +30,8 @@ public interface CartMapper {
     int updateProductCheckedStatus(@Param("userId")Integer userId,@Param("productId")Integer productId,@Param("checkedOrUnChecked")Integer checkedOrUnChecked);
 
     int selectCartProductCount(Integer userId);
+
+    List<Cart> listCheckedCartByUserId(Integer userId);
+
+    int deleteCheckedCartAfterOrderCreated(Integer userId);
 }

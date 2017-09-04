@@ -42,4 +42,125 @@ public class Const {
             return this.desc;
         }
     }
+
+    public enum OrderStatusEnum{
+        CANCELED(0,"已取消"),
+        NO_PAY(10,"未支付"),
+        PAID(20,"已支付"),
+        SHIPPED(40,"已发货"),
+        ORDER_SUCCESS(50,"订单完成"),
+        ORDER_CLOSE(60,"订单关闭");
+
+        private int code;
+        private String value;
+        OrderStatusEnum(int code,String value){
+            this.code = code;
+            this.value = value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+
+        public String getValue() {
+            return value;
+        }
+
+        public static String descOfOrderStatus(Integer code){
+            if(code == null){
+                return "未填写支付状态";
+            }
+            switch (code){
+                case 0:
+                    return "已取消";
+                case 10:
+                    return "未支付";
+                case 20:
+                    return "已支付";
+                case 40:
+                    return "已发货";
+                case 50:
+                    return "订单完成";
+                case 60:
+                    return "订单关闭";
+                default:
+                    return "没有该种订单状态";
+            }
+        }
+
+    }
+
+    public interface AlipayCallback{
+        String TRADE_STATUS_WAIT_BUYER_PAY = "WAIT_BUYER_PAY";
+        String TRADE_STATUS_TRADE_SUCCESS = "TRADE_SUCCESS";
+
+        String RESPONSE_SUCCESS = "success";
+        String RESPONSE_FAILED = "failed";
+    }
+
+    public enum PayPlatformEnum{
+        ALIPAY(1,"支付宝");
+
+        private int code;
+        private String value;
+        PayPlatformEnum(int code,String value){
+            this.code = code;
+            this.value = value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+
+        public String getValue() {
+            return value;
+        }
+
+        public static String valueOfPayPlatform(Integer code){
+            if(code == null){
+                return "未填写支付平台";
+            }
+            switch (code){
+                case 1:
+                    return "支付宝";
+                default:
+                    return "没有该种支付平台";
+            }
+        }
+    }
+
+    public enum PaymentTypeEnum{
+        ONLINE_PAY(1,"在线支付");
+
+        private int code;
+        private String value;
+        PaymentTypeEnum(int code,String value){
+            this.code = code;
+            this.value = value;
+        }
+
+
+        public int getCode() {
+            return code;
+        }
+
+
+        public String getValue() {
+            return value;
+        }
+
+        public static String valueOfPaymentType(Integer code){
+            if(code == null){
+                return "未填写支付方式";
+            }
+            switch (code){
+                case 1:
+                    return "在线支付";
+                default:
+                    return "没有该种支付方式";
+            }
+        }
+    }
 }

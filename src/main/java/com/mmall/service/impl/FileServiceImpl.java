@@ -23,7 +23,7 @@ public class FileServiceImpl implements IFileService{
         String fileName = file.getOriginalFilename();
         String suffixStr = fileName.substring(fileName.lastIndexOf("."));
         String storageFileName = UUID.randomUUID().toString() + suffixStr;
-        logger.info("开始上传文件,上传的文件名：{},路径：{}，新文件名：{}",fileName,path,storageFileName);
+        logger.info("开始上传文件，上传的文件名：{},路径：{}，新文件名：{}",fileName,path,storageFileName);
 
         File uploadFileDir = new File(path);
         if(!uploadFileDir.exists()){
@@ -39,7 +39,7 @@ public class FileServiceImpl implements IFileService{
 
             targetFile.delete();
         } catch (IOException e) {
-            logger.error("上传文件出错",e);
+            logger.error("上传文件出错：",e);
             targetFile.delete();
             return null;
         }

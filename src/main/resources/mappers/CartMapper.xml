@@ -156,4 +156,20 @@
     where user_id = #{userId}
   </select>
 
+  <select id="listCheckedCartByUserId" resultMap="BaseResultMap" parameterType="integer">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_cart
+    where user_id = #{userId}
+    and checked = 1
+  </select>
+
+  <delete id="deleteCheckedCartAfterOrderCreated" parameterType="integer">
+    delete
+    from mmall_cart
+    where user_id = #{userId}
+    and checked = 1
+  </delete>
+
+
 </mapper>

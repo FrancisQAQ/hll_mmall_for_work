@@ -187,4 +187,35 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByOrderNoAndUserId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_order
+    where user_id = #{userId}
+    and order_no = #{orderNo}
+  </select>
+
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="long">
+    select
+    <include refid="Base_Column_List"/>
+    from  mmall_order
+    where order_no = #{orderNo}
+  </select>
+
+  <select id="listOrderByUserId" resultMap="BaseResultMap" parameterType="integer">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_order
+    <if test="userId != null">
+      where user_id = #{userId}
+    </if>
+  </select>
+
+  <update id="updateSendGoodsTime" parameterType="map">
+    update mmall_order
+    set send_time = now()
+    ,status = #{status}
+    where order_no = #{orderNo}
+  </update>
 </mapper>
